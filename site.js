@@ -33,3 +33,39 @@
   select(buttons[0]);
   controls.hidden = false;
 })();
+
+(() => {
+  const gallery = document.querySelector(".beach-slideshow");
+  if (!gallery) return;
+  const viewport = gallery.querySelector(".gallery-viewport");
+  const slides = Array.from(viewport.children);
+  const controls = gallery.querySelector(".gallery-controls");
+  const position = controls.querySelector(".gallery-position");
+  let current = 0;
+
+  function show(index) {
+    const focusWasInsideSlide = slides[current].contains(document.activeElement);
+    current = (index + slides.length) % slides.length;
+    slides.forEach((slide, index) => { slide.hidden = index !== current; });
+    position.textContent = `Photo ${current + 1} of ${slides.length}`;
+    if (focusWasInsideSlide) slides[current].querySelector("a").focus({ preventScroll: true });
+  }
+
+  controls.querySelectorAll("button[data-direction]").forEach((button) => {
+    button.addEventListener("click", () => show(current + Number(button.dataset.direction)));
+  });
+  gallery.addEventListener("keydown", (event) => {
+    const target = {
+      ArrowLeft: current - 1,
+      ArrowRight: current + 1,
+      Home: 0,
+      End: slides.length - 1,
+    }[event.key];
+    if (typeof target !== "number" || event.altKey || event.ctrlKey || event.metaKey) return;
+    event.preventDefault();
+    show(target);
+  });
+  show(0);
+  gallery.dataset.enhanced = "true";
+  controls.hidden = false;
+})();

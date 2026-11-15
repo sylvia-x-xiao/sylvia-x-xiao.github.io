@@ -30,15 +30,14 @@ p + p { margin-block-start: 1em; }
 .skip { position: absolute; z-index: 2; inset: .55rem auto auto 1rem; padding: .55rem .7rem; background: var(--paper); transform: translateY(-160%); }
 .skip:focus { transform: none; }
 .site-header { border-block-end: 1px solid var(--line); }
-.site-header > .frame { min-block-size: 5.2rem; display: flex; align-items: center; justify-content: space-between; gap: .5rem 2rem; }
-.wordmark { color: var(--ink); font: 1.5rem/1.15 var(--serif); text-decoration: none; }
-.nav { display: flex; align-items: center; flex-wrap: wrap; gap: .1rem 1.6rem; }
+.site-header > .frame { min-block-size: 4.4rem; display: flex; align-items: center; justify-content: center; }
+.nav { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: .1rem 1.6rem; }
 .nav a { font-size: 1rem; padding-block: .55rem; color: var(--muted); text-decoration: none; }
 .nav a[aria-current] { color: var(--teal); box-shadow: inset 0 -2px var(--teal); font-weight: 650; }
 .nav a:hover { color: var(--teal); text-decoration: underline; }
 .eyebrow { color: var(--teal); font-size: .77rem; letter-spacing: .13em; text-transform: uppercase; font-weight: 690; }
-.hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(14rem, 22rem); align-items: center; gap: clamp(2rem, 5vw, 5rem); padding-block: clamp(3rem, 8vw, 7rem) clamp(3.5rem, 8vw, 6rem); }
-.name { display: flex; align-items: baseline; flex-wrap: wrap; gap: .12em .34em; font-size: clamp(2.6rem, 5.2vw, 4.6rem); letter-spacing: -.038em; margin-block: .23em .31em; }
+.hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(14rem, 22rem); align-items: start; gap: clamp(2rem, 5vw, 5rem); padding-block: clamp(3rem, 8vw, 7rem) clamp(3.5rem, 8vw, 6rem); }
+.name { display: flex; align-items: baseline; flex-wrap: wrap; gap: .12em .34em; font-size: clamp(2rem, 3.8vw, 3.35rem); letter-spacing: -.038em; margin-block: .23em .31em; }
 .name span { font-size: inherit; }
 .name [lang] { color: var(--teal); letter-spacing: .02em; white-space: nowrap; }
 .affiliation { max-inline-size: 37ch; font-size: 1.08em; line-height: 1.5; }
@@ -123,17 +122,24 @@ p + p { margin-block-start: 1em; }
 
 .bio { max-inline-size: 67ch; margin-block: 3.25rem; }
 .bio h2 { margin-block-end: .7rem; }
-.liberty { display: grid; grid-template-columns: 1fr 1fr; align-items: center; background: var(--wash); }
+.liberty { inline-size: min(100%, 55rem); background: var(--wash); }
 .liberty img { inline-size: 100%; }
-.liberty figcaption { padding: clamp(1.35rem, 4vw, 3.2rem); }
-.liberty blockquote { font: clamp(1.65rem, 3.2vw, 2.6rem)/1.18 var(--serif); color: var(--teal); }
+.liberty figcaption { padding: .75rem clamp(1rem, 2.5vw, 1.6rem) .95rem; }
+.liberty blockquote { font: clamp(1.65rem, 4vw, 3rem)/1.15 var(--serif); color: var(--teal); }
 .gallery { margin-block: 4rem; }
 .gallery h2 { margin-block-end: .7rem; }
 .gallery p { max-inline-size: 68ch; color: var(--muted); }
-.gallery-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .65rem; margin-block-start: 1.5rem; }
-.gallery-grid img { aspect-ratio: 4 / 3; inline-size: 100%; object-fit: cover; background: var(--wash); }
-.gallery-grid img[src="figures/gallery-08.jpg"] { object-position: center 21%; }
-.gallery-grid a { display: block; }
+.beach-slideshow { inline-size: min(100%, 34rem); margin-block-start: 1.25rem; }
+.gallery-viewport { list-style: none; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; margin: 0; padding: 0; background: var(--wash); }
+.gallery-viewport li { flex: 0 0 100%; min-inline-size: 0; scroll-snap-align: start; }
+.gallery-viewport a { position: relative; display: block; aspect-ratio: 3 / 2; }
+.gallery-viewport a:focus-visible { outline-offset: -4px; }
+.gallery-viewport img { position: absolute; inset: 0; inline-size: 100%; block-size: 100%; object-fit: contain; }
+.beach-slideshow[data-enhanced] .gallery-viewport { overflow: hidden; }
+.gallery-controls { display: flex; align-items: center; justify-content: space-between; gap: .5rem; margin-block-start: .5rem; }
+.gallery-controls button { min-block-size: 2.75rem; padding: .3rem .68rem; border: 1px solid #a5b9ad; border-radius: .25rem; background: transparent; color: var(--teal); font: 640 .9rem/1.25 var(--sans); cursor: pointer; }
+.gallery-controls button:hover { background: var(--wash); border-color: var(--teal); }
+.gallery-position { font-size: .86rem; white-space: nowrap; }
 .personal-quote { max-inline-size: 67ch; margin-block: 3rem 4rem; border-block-start: 1px solid var(--line); padding-block-start: 1.15rem; }
 .personal-quote blockquote { font: clamp(1.23rem, 2.25vw, 1.65rem)/1.35 var(--serif); }
 .personal-quote figcaption { color: var(--muted); font-size: .91rem; margin-block-start: .65rem; }
@@ -148,16 +154,14 @@ p + p { margin-block-start: 1em; }
 
 @media (max-width: 43rem) {
   .frame { inline-size: calc(100% - 2.5rem); }
-  .site-header > .frame { min-block-size: 4.4rem; flex-wrap: wrap; padding-block: .55rem; }
-  .wordmark { font-size: 1.28rem; }
+  .site-header > .frame { min-block-size: 3.8rem; padding-block: .35rem; }
   .nav { gap: .05rem .85rem; }
   .nav a { font-size: .88rem; }
   .hero { display: flex; flex-direction: column; align-items: flex-start; padding-block: 2.6rem 3.25rem; gap: 1.75rem; }
   .portrait { inline-size: min(calc(100% - .9rem), 17rem); }
-  .focus-list, .liberty, .research-community { grid-template-columns: 1fr; }
+  .focus-list, .research-community { grid-template-columns: 1fr; }
   .focus-paper, .focus-paper:first-child, .focus-paper:last-child { padding-inline: 0; }
   .focus-paper + .focus-paper { border-inline-start: 0; border-block-start: 1px solid var(--line); }
-  .gallery-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .teaching-program { grid-template-columns: 1fr; gap: .75rem; }
   .page-head { padding-block-start: 2.65rem; }
   .research-section { margin-block: 2.3rem 3.3rem; }
@@ -165,5 +169,4 @@ p + p { margin-block-start: 1em; }
 
 @media (max-width: 24rem) {
   .frame { inline-size: calc(100% - 2rem); }
-  .nav { flex-basis: 100%; column-gap: 1rem; }
 }
