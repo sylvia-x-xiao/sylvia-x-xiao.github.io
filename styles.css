@@ -88,7 +88,7 @@ p + p { margin-block-start: 1em; }
 .paper h3, .paper h4 { max-inline-size: 56rem; }
 .paper h4 { font-family: var(--serif); font-size: clamp(1.45rem, 2.7vw, 2rem); font-weight: 400; line-height: 1.16; }
 .paper h4[lang] { font-family: var(--han); }
-.pub-group h3 { margin-block: 1.8rem .65rem; font: 680 1rem/1.4 var(--sans); color: var(--muted); }
+.pub-group h3 { margin-block: 1.8rem .65rem; font: 680 clamp(1.9rem, 3.5vw, 2.6rem)/1.2 var(--sans); color: var(--muted); }
 .meta { color: var(--muted); font-size: .91rem; }
 .paper > .meta { margin-block-start: .28rem; }
 .meta + .meta { margin-block-start: .25rem; }
