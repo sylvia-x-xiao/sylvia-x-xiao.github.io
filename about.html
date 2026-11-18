@@ -3,15 +3,24 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Sylvia Xiaolin Xiao’s biography, photographs and favorite quotes.">
+  <meta name="description" content="Sylvia Xiaolin Xiao’s biography, photographs, and favorite quotations.">
   <title>About Me | Sylvia Xiaolin Xiao</title>
-  <link rel="stylesheet" href="styles.css?v=971d77a910e1">
-  <script src="site.js?v=61eb59258702" defer></script>
+  <link rel="canonical" href="https://sylvia-x-xiao.github.io/about.html">
+  <link rel="icon" href="favicon.svg?v=73fa13cf3749" type="image/svg+xml">
+  <meta property="og:title" content="About Me | Sylvia Xiaolin Xiao">
+  <meta property="og:description" content="Sylvia Xiaolin Xiao’s biography, photographs, and favorite quotations.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://sylvia-x-xiao.github.io/about.html">
+  <meta property="og:site_name" content="Sylvia Xiaolin Xiao">
+  <meta property="og:image" content="https://sylvia-x-xiao.github.io/figures/portrait.webp">
+  <link rel="stylesheet" href="styles.css?v=c0f7de627237">
+  <script src="site.js?v=6b59358e5e8b" defer></script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
-  <header class="site-header">
+  <header class="site-header site-header--inner">
     <div class="frame">
+      <a href="index.html" class="site-brand">Sylvia Xiaolin Xiao</a>
       <nav class="nav" aria-label="Main navigation"><a href="index.html">Home</a>
 <a href="research.html">Research</a>
 <a href="teaching.html">Teaching</a>
@@ -31,12 +40,12 @@
     </figure>
     <section class="bio" aria-labelledby="bio-title">
       <h2 id="bio-title">Brief Biography</h2>
-      <p>I took a nonlinear path into academia. After teaching for a few years in a joint Chinese–Australian business school, I went to Australia and completed my economics PhD at Uni. of Technology Sydney, within four years. During my PhD, I visited UW-Madison for half a year, interned at the St. Louis Fed, and worked as a research fellow at Uni. of Melbourne.</p>
+      <p>I took a nonlinear path into academia. After teaching for a few years in a joint Chinese–Australian business school, I went to Australia and completed my economics PhD at Uni. of Technology Sydney, within four years. During my PhD, I visited UW–Madison for half a year, interned at the St. Louis Fed, and worked as a research fellow at Uni. of Melbourne.</p>
 <p>After working as a Dan Searle Postdoctoral fellow at UW–Madison (2 years) and a permanent lectureship at AUT (1 year, New Zealand), I joined Peking University and have been an Associate Professor of Economics since 2024. During my 2024–2025 sabbatical, I visited New York Uni. and UC Santa Barbara.</p>
     </section>
     <section class="gallery" aria-labelledby="gallery-title">
       <h2 id="gallery-title">Beach Walk Photos</h2>
-      <p>In my spare time, I like running, swimming, photography and adventure by various (beach/lake/bush) walks. Here are some photos of beach walk, taken during my PhD in Australia.</p>
+      <p>In my spare time, I like running, swimming, photography and adventure by various (beach/lake/bush) walks. Here are some photos of beach walks, taken during my PhD in Australia.</p>
       <div class="beach-slideshow" role="group" aria-label="Beach walk photo slideshow">
         <ul class="gallery-viewport" id="beach-photos" role="list" tabindex="0" aria-label="Beach walk photos"><li><a href="figures/gallery-01.jpg"><img src="figures/gallery-01.jpg" alt="Sydney Harbour skyline and bridge across the water" width="400" height="264" loading="lazy" decoding="async"></a></li>
 <li><a href="figures/gallery-02.jpg"><img src="figures/gallery-02.jpg" alt="Sylvia standing in the surf on a windy day" width="400" height="264" loading="lazy" decoding="async"></a></li>
@@ -56,13 +65,26 @@
           <button type="button" data-direction="1" aria-controls="beach-photos" aria-label="Next photo">Next <span aria-hidden="true">→</span></button>
         </div>
       </div>
+      <dialog class="gallery-lightbox" id="gallery-lightbox" aria-label="Enlarged beach walk photo">
+        <figure class="lightbox-figure">
+          <img id="lightbox-img" src="" alt="">
+          <figcaption class="lightbox-caption" id="lightbox-caption"></figcaption>
+        </figure>
+        <div class="lightbox-bar">
+          <div class="lightbox-nav">
+            <button type="button" data-lightbox-dir="-1" aria-label="Previous photo">← Previous</button>
+            <span class="gallery-position" id="lightbox-position" role="status"></span>
+            <button type="button" data-lightbox-dir="1" aria-label="Next photo">Next →</button>
+          </div>
+          <button type="button" id="lightbox-close" aria-label="Close enlarged photo">Close ✕</button>
+        </div>
+      </dialog>
     </section>
-    <figure class="personal-quote"><blockquote><p>&quot;If you are not a washing machine or a cuckoo clock -- in other words, if you are alive -- something deep in your soul likes a certain measure of randomness and disorder.&quot;</p></blockquote><figcaption>(N. Taleb)</figcaption></figure>
+    <figure class="personal-quote"><blockquote><p>&quot;If you are not a washing machine or a cuckoo clock — in other words, if you are alive — something deep in your soul likes a certain measure of randomness and disorder.&quot;</p></blockquote><figcaption>(N. Taleb)</figcaption></figure>
   </main>
   <footer class="site-footer">
     <div class="frame">
       <p>Sylvia Xiaolin Xiao · Peking University</p>
-      <p><a href="mailto:sylvia.xiao@gsm.pku.edu.cn">sylvia.xiao@gsm.pku.edu.cn</a></p>
     </div>
   </footer>
 </body>
