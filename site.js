@@ -9,6 +9,80 @@
   const empty = document.querySelector("#no-results");
   const note = document.querySelector("#corresponding-note");
   const toggleBtn = document.querySelector("#toggle-abstracts");
+  const listingSelector = ["conferences", "seminars", "presentations"]
+    .map((kind) => `.paper-listing[data-kind="${kind}"]`)
+    .join(", ");
+  const listings = Array.from(document.querySelectorAll(listingSelector), (row) => {
+    const content = document.createElement("span");
+    content.className = "paper-listing-content";
+    content.append(...row.childNodes);
+
+    const measure = document.createElement("span");
+    measure.className = "paper-listing-measure";
+    measure.setAttribute("aria-hidden", "true");
+    measure.append(content.cloneNode(true));
+
+    content.id = `${row.closest(".paper").id}-${row.dataset.kind}-listing`;
+    const label = content.querySelector(".listing-label").textContent.replace(/:$/, "");
+    const button = document.createElement("button");
+    button.className = "paper-listing-toggle";
+    button.type = "button";
+    button.hidden = true;
+    button.setAttribute("aria-controls", content.id);
+
+    const listing = { row, content, measure, label, button, expanded: false, overflows: false };
+    button.addEventListener("click", () => {
+      listing.expanded = !listing.expanded;
+      renderListing(listing);
+    });
+    row.append(content, button);
+    return listing;
+  });
+
+  function renderListing({ row, content, label, button, expanded, overflows }) {
+    const folded = overflows && !expanded;
+    if (!overflows && document.activeElement === button) {
+      content.tabIndex = -1;
+      content.focus({ preventScroll: true });
+    }
+    row.classList.toggle("paper-listing--folded", folded);
+    button.hidden = !overflows;
+    button.setAttribute("aria-expanded", String(!folded));
+    const text = folded ? "Show more" : "Show less";
+    if (button.textContent !== text) {
+      button.textContent = text;
+      button.setAttribute("aria-label", `${text} about ${label.toLowerCase()}`);
+    }
+  }
+
+  function refreshListings() {
+    const visible = [];
+    for (const listing of listings) {
+      const width = listing.row.getBoundingClientRect().width;
+      if (width <= 0) continue;
+      const { paddingInlineStart, paddingInlineEnd } = getComputedStyle(listing.row);
+      visible.push({ listing, width: width - parseFloat(paddingInlineStart) - parseFloat(paddingInlineEnd) });
+    }
+
+    // Measure the full line with its inline formatting and no space reserved for the button.
+    visible.forEach(({ listing }) => listing.row.append(listing.measure));
+    visible.forEach(({ listing, width }) => {
+      listing.overflows = listing.measure.firstElementChild.getBoundingClientRect().width > width;
+    });
+    visible.forEach(({ listing }) => {
+      listing.measure.remove();
+      renderListing(listing);
+    });
+  }
+
+  let listingFrame = 0;
+  function queueListingRefresh() {
+    if (listingFrame) return;
+    listingFrame = window.requestAnimationFrame(() => {
+      listingFrame = 0;
+      refreshListings();
+    });
+  }
 
   const counts = new Map();
   buttons.forEach((btn) => {
@@ -91,6 +165,7 @@
 
     if (updateUrl) syncUrl(topic);
     refreshAbstractToggle();
+    refreshListings();
   }
 
   function revealHashTarget() {
@@ -139,6 +214,25 @@
   window.addEventListener("hashchange", revealHashTarget);
   controls.hidden = false;
 
+  if (listings.length) {
+    window.addEventListener("resize", queueListingRefresh);
+    if (document.fonts) {
+      document.fonts.ready.then(queueListingRefresh);
+      document.fonts.addEventListener("loadingdone", queueListingRefresh);
+    }
+    if (typeof ResizeObserver === "function") {
+      const widths = new WeakMap();
+      const observer = new ResizeObserver((entries) => {
+        for (const { target, contentRect } of entries) {
+          if (widths.get(target) !== contentRect.width) queueListingRefresh();
+          widths.set(target, contentRect.width);
+        }
+      });
+      const groups = new Set(listings.map(({ row }) => row.parentElement));
+      groups.forEach((group) => observer.observe(group));
+    }
+  }
+
   let closedBeforePrint = [];
   window.addEventListener("beforeprint", () => {
     closedBeforePrint = papers
@@ -150,6 +244,7 @@
     closedBeforePrint.forEach((d) => { d.open = false; });
     closedBeforePrint = [];
     refreshAbstractToggle();
+    queueListingRefresh();
   });
 })();
 
